@@ -1,16 +1,20 @@
 // Lib For LoRa
 #include <SPI.h>
-#include <LoRa.h>
+#include <RH_RF95.h>
+float frequency = 909.56;
 
-#define ss 10
-#define rst 7 // 7-12
-#define dio0 2
+RH_RF95 rf95;
+
+#define DEVICE_ID 242
+#define FLAG "CSL"
 
 // Lib For Sensor & LCD Display
 #include <Arduino.h>
 #include <Wire.h>
 #include "Adafruit_SHT31.h"
 #include <LCDI2C_Multilingual.h>
+
+#include "LoRaUtils.h"
 
 LCDI2C_Symbols lcd(0x27, 16, 2);  // I2C address: 0x27; Display size: 16x2
 
@@ -41,16 +45,16 @@ void setup() {
   Serial.begin(9600);
   while (!Serial)
     ;
+  Serial.println("LoRa Setup");
+  if (!rf95.init())
+    Serial.println("init failed");
+  rf95.setFrequency(frequency);
+  rf95.setSpreadingFactor(7);
+  Serial.println("Sensor Setup");
   setupTempSensor();
+  Serial.println("LCD Setup");
   lcd.init();
   lcd.backlight();
-  Serial.println("LoRa Sender");
-  LoRa.setPins(ss, rst, dio0);
-  if (!LoRa.begin(433E6)) {
-    Serial.println("Starting LoRa failed!");
-    while (1)
-      ;
-  }
 }
 
 void displayToLcd(String line1, String line2) {
@@ -65,12 +69,13 @@ struct tempAndHumStruct {
   float hum;
 };
 
-void getTempAndHum(struct tempAndHumStruct *source) {
+void getTempAndHum(struct tempAndHumStruct *source){
   float t = sht31.readTemperature();
   float h = sht31.readHumidity();
+  
 
-  if (!isnan(t) && !isnan(h)) {  // check if 'is not a number'
 
+  if (!isnan(t) && !isnan(h)) {  // check if 'is not a number'    
     // Serial.print("Temp *C = "); Serial.print(t); Serial.print("\t\t");
     source->temp = t;
     source->hum = h;
@@ -96,20 +101,30 @@ void getTempAndHum(struct tempAndHumStruct *source) {
   loopCnt++;
 }
 
+
+
 void loop() {
   struct tempAndHumStruct tempAndHum;
   getTempAndHum(&tempAndHum);
-  char buff1[20], buff2[20], buff3[50];
+  //uint8_t data[] = "CSL 242 ";
+  uint8_t data[25] = "";
+  String what = "";
+  what.concat("CSL ");
+  what.concat("242 ");
+  what.concat("T ");
+  what.concat(tempAndHum.temp);
+  what.concat(" H ");
+  what.concat(tempAndHum.hum);
+  what.toCharArray((char*)data, sizeof(data));
+  Serial.println(String((char*)data));
+  
+  char buff1[20], buff2[20];
   snprintf(buff1, sizeof(buff1), "Temp:   %.2f°C", tempAndHum.temp);
   snprintf(buff2, sizeof(buff2), "Hum :   %.2f", tempAndHum.hum);
   displayToLcd(buff1, buff2);
-  snprintf(buff3, sizeof(buff3), "{\"temp\":\"%.2f\",\"hum\":\"%.2f\"}", tempAndHum.temp, tempAndHum.hum);
 
-  // send packet
-  LoRa.beginPacket();
-  LoRa.print(buff3);
-  //LoRa.print(counter);
-  LoRa.endPacket();
+
+  sendMss(data);
 
   counter++;
 

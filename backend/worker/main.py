@@ -10,7 +10,7 @@ def on_connect(client, userdata, flags, reason_code, properties):
 
 def on_message(client, userdata, msg):
     val = json.loads(msg.payload)
-    database.append_row(val["temp"], val["hum"])
+    database.append_row(val["T"], val["H"])
     print(val)
 
 mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)

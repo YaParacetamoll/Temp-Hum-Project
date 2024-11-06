@@ -5,7 +5,7 @@ float frequency = 909.56;
 
 RH_RF95 rf95;
 
-#define DEVICE_ID 242
+#define DEVICE_ID 112
 #define FLAG "CSL"
 
 // Lib For Sensor & LCD Display
@@ -107,15 +107,19 @@ void loop() {
   struct tempAndHumStruct tempAndHum;
   getTempAndHum(&tempAndHum);
   //uint8_t data[] = "CSL 242 ";
-  uint8_t data[25] = "";
+  uint8_t data[50] = "";
   String what = "";
-  what.concat("CSL ");
-  what.concat("242 ");
-  what.concat("T ");
+  what.concat("{\"flag\":\"");
+  what.concat(String(FLAG));
+  what.concat("\",");
+  what.concat("\"id\":\"");
+  what.concat(String(DEVICE_ID));
+  what.concat("\",");
+  what.concat("\"T\":\"");
   what.concat(String(tempAndHum.temp));
-  what.concat(" H ");
+  what.concat("\",\"H\":\"");
   what.concat(String(tempAndHum.hum));
-  what.concat("\0");
+  what.concat("\"}\0");
   what.toCharArray((char*)data, sizeof(data));
   Serial.println(String((char*)data));
   
@@ -125,7 +129,7 @@ void loop() {
   displayToLcd(buff1, buff2);
 
 
-  sendMss(data,30);
+  sendMss(data,50);
 
   counter++;
 

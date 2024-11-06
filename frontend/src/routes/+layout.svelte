@@ -49,14 +49,14 @@
 		<SkipToContent />
 	</svelte:fragment>
 	<HeaderNav>
-		<HeaderNavItem href="/" text="Docs" />
-		<HeaderNavItem href="/" text="About" />
+		<HeaderNavItem href="/" text="Home" />
+		<HeaderNavItem href="/about" text="About" />
 	</HeaderNav>
 </Header>
 <SideNav bind:isOpen={isSideNavOpen}>
 	<SideNavItems>
-		<SideNavLink href="/" text="Docs" />
-		<SideNavLink href="/" text="About" />
+		<SideNavLink href="/" text="Home" />
+		<SideNavLink href="/about" text="About" />
 	</SideNavItems>
 </SideNav>
 

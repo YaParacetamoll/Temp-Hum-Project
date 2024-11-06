@@ -1,0 +1,5 @@
+paho-mqtt==2.1.0
+psycopg2-binary==2.9.10
+questdb-connect==1.1.3
+SQLAlchemy==2.0.36
+typing_extensions==4.12.2

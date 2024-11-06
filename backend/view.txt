@@ -1,0 +1,1 @@
+SELECT * , to_timezone(timestamp,'Asia/Bangkok') FROM sensors ORDER BY timestamp DESC

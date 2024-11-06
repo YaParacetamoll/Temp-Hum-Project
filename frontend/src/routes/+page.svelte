@@ -60,7 +60,7 @@
 	<Tile>
 		<h3 use:truncate>Day/Night</h3>
 		<div use:truncate>
-			<p class="mt-5 text-right text-6xl">Day</p>
+			<p class="mt-5 text-right text-6xl">Night</p>
 		</div>
 	</Tile>
 
@@ -84,6 +84,9 @@
 		{#each ['Sun', 'Mon', 'Thu', 'Wen', 'Thur', 'Fri', 'Sat'] as d}
 			<Tile>
 				{d}
+				<div use:truncate>
+					<p class="mt-5 text-right">{24+Math.random()*5+""}</p>
+				</div>
 			</Tile>
 		{/each}
 	</div>

@@ -37,6 +37,7 @@
 	"dependencies": {
 		"@carbon/charts": "^1.22.0",
 		"@carbon/icons-react": "^11.52.0",
-		"carbon-components-svelte": "^0.85.3"
+		"carbon-components-svelte": "^0.85.3",
+		"mqtt": "^5.10.1"
 	}
 }

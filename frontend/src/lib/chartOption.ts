@@ -5,17 +5,17 @@ export default {
     theme: 'g100',
     axes: {
       left: {
-        mapsTo: 'temp',
+        mapsTo: 'value',
         stacked: true
       },
       bottom: {
         mapsTo: 'ts',
-        scaleType: ScaleTypes.TIME ,
+        scaleType: ScaleTypes.LABELS ,
         visible: false
       }
     },
     data: {
-        groupMapsTo: "temp"
+        groupMapsTo: "group"
     },
     toolbar: {
       enabled: true,

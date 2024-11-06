@@ -5,7 +5,7 @@ float frequency = 909.56;
 
 RH_RF95 rf95;
 
-#define DEVICE_ID 195
+#define DEVICE_ID 112
 #define FLAG "CSL"
 
 // Lib For Sensor & LCD Display

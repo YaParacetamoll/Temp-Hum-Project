@@ -5,37 +5,55 @@
 	import '@carbon/charts-svelte/styles.css';
 	import options from '$lib/chartOption';
 	import data from '$lib/mockData';
-	import { ImageLoader } from 'carbon-components-svelte';
+	import mqtt from "mqtt";
+	import  valMqttToPrettyFormat from "$lib/valMqttToPrettyFormat";
+	
 
 	import { writable } from 'svelte/store';
 
 	const opt = writable(options);
+	const val = writable([])
 	$effect(() => {
 		//opt.theme = "white"
 		opt.update((o) => {
 			o.theme = localStorage.getItem('theme') ?? 'g100';
 			return o;
 		});
+
+		let client = mqtt.connect('wss://phycom.it.kmitl.ac.th/mqtt',{port:8884,reconnectPeriod:5000});
+		client.on('connect', () => {
+			client.subscribe('temp-hum-pj/send', (err) => {
+			});
+		});
+
+		client.on('message', (topic, message) => {
+			// message is Buffer
+			let tempJson = JSON.parse(message.toString())
+			//console.log(valMqttToPrettyFormat(tempJson))
+			val.update(
+				(v) => [...v, ...valMqttToPrettyFormat(tempJson)]
+			)
+			
+			//val.update((v) => [...v, ...valMqttToPrettyFormat(tempJson)]);
+		});
 	});
 </script>
 
+<svelte:head>
+	<title>TempHumProject</title>
+</svelte:head>
 <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
-    <div class="lg:col-span-3 relative">
-        
-        <img
-            alt="bn"
-                src="/banner.jpeg"
-                class="object-cover h-32 w-full blur-[0.6px]"
-            />
+	<div class="relative lg:col-span-3">
+		<img alt="bn" src="/banner.jpeg" class="h-32 w-full object-cover blur-[0.6px]" />
 
-            <h1 class="top-0 absolute p-2">Tempmy</h1>
-    </div>
-   
+		<h1 class="absolute top-0 p-2">Tempmy</h1>
+	</div>
+
 	<Tile class="lg:col-span-3">
 		<h3 use:truncate>Analytics</h3>
-		
+
 		<div use:truncate>
-			<StackedAreaChart {data} options={$opt} style="padding:2rem;" />
+			<StackedAreaChart data={$val} options={$opt} style="padding:2rem;" />
 		</div>
 	</Tile>
 

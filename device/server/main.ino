@@ -14,9 +14,9 @@ MqttClient mqttClient(wifiClient);
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
 
 
-const char broker[] = "broker.hivemq.com";
+const char broker[] = "phycom.it.kmitl.ac.th"; //"broker.hivemq.com";
 int port = 1883;
-const char send_topic[] = "242/send";
+const char send_topic[] = "temp-hum-pj/send";
 
 //set interval for sending messages (milliseconds)
 const long interval = 1000;
@@ -63,7 +63,7 @@ void setupNetwork() {
   }
 
   // attempt to connect to WiFi network:
-  //while (status != WL_CONNECTED) {
+  while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to WPA SSID: ");
     Serial.println(ssid);
     loadding();
@@ -72,7 +72,7 @@ void setupNetwork() {
 
     // wait 10 seconds for connection:
     delay(10000);
-  //}
+  }
 
   // you're connected now, so print out the data:
   Serial.print("You're connected to the network");
@@ -108,8 +108,8 @@ void setupMQTT() {
     Serial.print("MQTT connection failed! Error code = ");
     Serial.println(mqttClient.connectError());
 
-    //while (1)
-    //  ;
+    while (1)
+      ;
   }
 
   Serial.println("You're connected to the MQTT broker!");

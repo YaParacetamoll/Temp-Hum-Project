@@ -112,9 +112,10 @@ void loop() {
   what.concat("CSL ");
   what.concat("242 ");
   what.concat("T ");
-  what.concat(tempAndHum.temp);
+  what.concat(String(tempAndHum.temp));
   what.concat(" H ");
-  what.concat(tempAndHum.hum);
+  what.concat(String(tempAndHum.hum));
+  what.concat("\0");
   what.toCharArray((char*)data, sizeof(data));
   Serial.println(String((char*)data));
   
@@ -124,7 +125,7 @@ void loop() {
   displayToLcd(buff1, buff2);
 
 
-  sendMss(data);
+  sendMss(data,30);
 
   counter++;
 

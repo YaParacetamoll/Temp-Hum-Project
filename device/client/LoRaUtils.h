@@ -39,7 +39,7 @@ void sendMss(uint8_t data[],int size){
   Serial.println("Sending to rf95_server");
   // Send a message to rf95_server
   //uint8_t data[] = "Hello World!";
-  rf95.send(data, size));
+  rf95.send(data, size);
   if (rf95.waitAvailableTimeout(3000))
   { 
    

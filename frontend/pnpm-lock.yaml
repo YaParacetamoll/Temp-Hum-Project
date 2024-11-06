@@ -11,6 +11,9 @@ importers:
       '@carbon/charts':
         specifier: ^1.22.0
         version: 1.22.0
+      '@carbon/icons-react':
+        specifier: ^11.52.0
+        version: 11.52.0(react@18.3.1)
       carbon-components-svelte:
         specifier: ^0.85.3
         version: 0.85.3
@@ -96,6 +99,14 @@ packages:
 
   '@carbon/colors@11.28.0':
     resolution: {integrity: sha512-zmNJk5Ec453aL3bk9RRSmM+dkVbyVMvUuKd6szJCOWLoqBFBXbd3PDRZO0AZeHp/Iel9sBRf1gUYej1BJ/5+hw==}
+
+  '@carbon/icon-helpers@10.54.0':
+    resolution: {integrity: sha512-IJ6uzwRA/6yvSG6tTCQoKIcGehwZYYqjvLHylILmEwyfB8kWV9VmJu957hfrfbS2rmuCXwmN6kCAnb4WS8FnFw==}
+
+  '@carbon/icons-react@11.52.0':
+    resolution: {integrity: sha512-t9fkYEpp7o1Gc7c8WiEszqypbSaxfQLku05h3+IlNRFaUVEwpDMq63tM/RsXvKo7EPYESS6ELKMv7lKCITOBKQ==}
+    peerDependencies:
+      react: '>=16'
 
   '@carbon/telemetry@0.1.0':
     resolution: {integrity: sha512-kNWt0bkgPwGW0i5h7HFuljbKRXPvIhsKbB+1tEURAYLXoJg9iJLF1eGvWN5iVoFCS2zje4GR3OGOsvvKVe7Hlg==}
@@ -1553,12 +1564,22 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
+  prop-types@15.8.1:
+    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
+
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
+
+  react-is@16.13.1:
+    resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
+    engines: {node: '>=0.10.0'}
 
   read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
@@ -1869,6 +1890,17 @@ snapshots:
   '@carbon/colors@11.28.0':
     dependencies:
       '@ibm/telemetry-js': 1.8.0
+
+  '@carbon/icon-helpers@10.54.0':
+    dependencies:
+      '@ibm/telemetry-js': 1.8.0
+
+  '@carbon/icons-react@11.52.0(react@18.3.1)':
+    dependencies:
+      '@carbon/icon-helpers': 10.54.0
+      '@ibm/telemetry-js': 1.8.0
+      prop-types: 15.8.1
+      react: 18.3.1
 
   '@carbon/telemetry@0.1.0': {}
 
@@ -3217,9 +3249,21 @@ snapshots:
 
   prettier@3.3.3: {}
 
+  prop-types@15.8.1:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
+
+  react-is@16.13.1: {}
+
+  react@18.3.1:
+    dependencies:
+      loose-envify: 1.4.0
 
   read-cache@1.0.0:
     dependencies:

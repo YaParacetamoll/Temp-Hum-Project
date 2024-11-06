@@ -31,7 +31,7 @@
 			let tempJson = JSON.parse(message.toString())
 			//console.log(valMqttToPrettyFormat(tempJson))
 			val.update(
-				(v) => [...v, ...valMqttToPrettyFormat(tempJson)]
+				(v) => [...v, ...valMqttToPrettyFormat(tempJson,v)]
 			)
 			
 			//val.update((v) => [...v, ...valMqttToPrettyFormat(tempJson)]);
@@ -67,13 +67,13 @@
 	<Tile>
 		<h3 use:truncate>Temperature</h3>
 		<div use:truncate>
-			<p class="mt-5 text-right text-6xl">30.0</p>
+			<p class="mt-5 text-right text-6xl">{[...$val].pop()?.temp}</p>
 		</div>
 	</Tile>
 	<Tile>
 		<h3 use:truncate>Hum</h3>
 		<div use:truncate>
-			<p class="mt-5 text-right text-6xl">30.0</p>
+			<p class="mt-5 text-right text-6xl">{[...$val].pop()?.hum}</p>
 		</div>
 	</Tile>
 

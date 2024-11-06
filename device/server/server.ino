@@ -21,12 +21,12 @@ MqttClient mqttClient(wifiClient);
 ///////please enter your sensitive data in the Secret tab/arduino_secrets.h
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
-const char broker[] = "mqtt-dashboard.com"; //"broker.hivemq.com";
+const char broker[] = "phycom.it.kmitl.ac.th"; //"broker.hivemq.com";
 int port = 1883;
 const char send_topic[] = "temp-hum-pj/send";
 
 //set interval for sending messages (milliseconds)
-const long interval = 1000;
+const long interval = 500;
 unsigned long previousMillis = 0;
 
 int status = WL_IDLE_STATUS;  // the WiFi radio's status
@@ -119,7 +119,7 @@ void setup() {
 
   while (!Serial);
   Serial.begin(9600);
-  delay(100);
+  delay(10);
 
   Serial.println("Arduino LoRa RX Test!");
   

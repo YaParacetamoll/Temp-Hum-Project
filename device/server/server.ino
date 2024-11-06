@@ -8,6 +8,9 @@ ArduinoLEDMatrix matrix;
 #include <WiFiS3.h>
 #include "arduino_secrets.h"
 
+#define DEVICE_ID 242
+#define FLAG "CSL"
+
 WiFiClient wifiClient;
 MqttClient mqttClient(wifiClient);
 
@@ -207,10 +210,10 @@ void loop() {
   Serial.print(tempAndHum.temp);
   Serial.print("Hum");
   Serial.print(tempAndHum.hum);
-  char buff1[20], buff2[20], buff3[50];
+  char buff1[20], buff2[20], buff3[60];
   snprintf(buff1, sizeof(buff1), "Temp:   %.2f°C", tempAndHum.temp);
   snprintf(buff2, sizeof(buff2), "Hum :   %.2f", tempAndHum.hum);
   displayToLcd(buff1, buff2);
-  snprintf(buff3, sizeof(buff3), "{\"temp\":\"%.2f\",\"hum\":\"%.2f\"}", tempAndHum.temp, tempAndHum.hum);
+  snprintf(buff3, sizeof(buff3), "{\"flag\":\"%s\",\"device\":\"%d\",\"temp\":\"%.2f\",\"hum\":\"%.2f\"}" , FLAG, DEVICE_ID ,tempAndHum.temp, tempAndHum.hum);
   publishMessageMQTT(buff3);
 }

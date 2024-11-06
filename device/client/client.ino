@@ -5,7 +5,7 @@ float frequency = 909.56;
 
 RH_RF95 rf95;
 
-#define DEVICE_ID 112
+#define DEVICE_ID 195
 #define FLAG "CSL"
 
 // Lib For Sensor & LCD Display
@@ -133,5 +133,5 @@ void loop() {
 
   counter++;
 
-  delay(5000);
+  delay(1000);
 }
